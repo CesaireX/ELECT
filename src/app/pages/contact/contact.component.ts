@@ -15,13 +15,15 @@ export class ContactComponent implements OnInit {
   latitude = 12.450953551583895;
   longitude = -1.5552434954043148;
   submitted=false;
+  envoi=false;
   spinner=false;
+  minimap:any;
   public iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
 
   constructor(private fb:FormBuilder,public firestore:AngularFirestore, public serv:MessageService){
     this.form=this.fb.group({
       nom:['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(2)]],
-      email: ['',[ Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       message:['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(2)]],
     })
   }
@@ -54,7 +56,10 @@ export class ContactComponent implements OnInit {
 */
     submit()
     {
-      if(this.form.controls['email'].value!==null && this.form.controls['nom'].value!==null && this.form.controls['message'].value!==null)
+      this.envoi=true;
+
+      console.log(this.form.controls['email'].value)
+      if(this.form.controls['email'].value!="" && this.form.controls['nom'].value!="" && this.form.controls['message'].value!="" && this.form.controls['message'].valid && this.form.controls['email'].valid && this.form.controls['nom'].valid)
       {
 
         this.spinner=true;
@@ -63,9 +68,12 @@ export class ContactComponent implements OnInit {
           this.serv.add(this.form.value)
           this.spinner=false;
         },8000)
-      }
 
-      this.turn();
+        this.turn();
+      }
+      else{
+        console.log('impossible')
+      }
 
     }
 

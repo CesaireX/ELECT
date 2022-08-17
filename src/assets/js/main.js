@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   "use strict";
+
   const preloader = document.querySelector('#preloader');
   if (preloader) {
     window.addEventListener('load', () => {
@@ -120,7 +121,7 @@ anime({
 
   const mobileNavShow = document.querySelector('.mobile-nav-show');
   const mobileNavHide = document.querySelector('.mobile-nav-hide');
-
+  const minimap = document.querySelector('.mini');
   document.querySelectorAll('.mobile-nav-toggle').forEach(el => {
     el.addEventListener('click', function(event) {
       event.preventDefault();
@@ -134,6 +135,7 @@ anime({
     document.querySelector('.ml5').classList.toggle('mobile-nav-ml5');
     mobileNavShow.classList.toggle('d-none');
     mobileNavHide.classList.toggle('d-none');
+    minimap.classList.toggle('d-none');
   }
 
   /**
